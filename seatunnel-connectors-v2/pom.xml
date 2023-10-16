@@ -81,7 +81,7 @@
                 <groupId>org.apache.seatunnel</groupId>
                 <artifactId>seatunnel-api</artifactId>
                 <version>${project.version}</version>
-                <scope>provided</scope>
+                <!--<scope>provided</scope>-->
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -91,7 +91,6 @@
             <groupId>org.apache.seatunnel</groupId>
             <artifactId>seatunnel-api</artifactId>
             <version>${project.version}</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 

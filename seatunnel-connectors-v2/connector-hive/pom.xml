@@ -30,11 +30,17 @@
     <name>SeaTunnel : Connectors V2 : Hive</name>
 
     <properties>
-        <hive.exec.version>2.3.9</hive.exec.version>
+        <hive.exec.version>2.3.2</hive.exec.version>
+        <hadoop3.version>3.1.4</hadoop3.version>
         <connector.name>connector.hive</connector.name>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.seatunnel</groupId>
+            <artifactId>connector-file-base</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.seatunnel</groupId>
             <artifactId>connector-file-base-hadoop</artifactId>
@@ -44,26 +50,21 @@
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>seatunnel-hadoop3-3.1.4-uber</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.apache.seatunnel</groupId>
+                    <artifactId>connector-file-base</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.apache.seatunnel</groupId>
-            <artifactId>seatunnel-hadoop3-3.1.4-uber</artifactId>
-            <version>${project.version}</version>
-            <classifier>optional</classifier>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.avro</groupId>
-                    <artifactId>avro</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-client</artifactId>
+            <version>${hadoop3.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.hive</groupId>
             <artifactId>hive-exec</artifactId>
             <version>${hive.exec.version}</version>
-            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>log4j</groupId>
