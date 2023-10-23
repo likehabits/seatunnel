@@ -28,6 +28,7 @@ import org.apache.seatunnel.common.exception.CommonErrorCode;
 import org.apache.seatunnel.format.json.exception.SeaTunnelJsonFormatException;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -37,12 +38,12 @@ public class JsonSerializationSchema implements SerializationSchema {
     private final SeaTunnelRowType rowType;
 
     /** Reusable object node. */
-    private transient ObjectNode node;
+    @Getter @Setter private transient ObjectNode node;
 
     /** Object mapper that is used to create output JSON objects. */
     @Getter private final ObjectMapper mapper = new ObjectMapper();
 
-    private final RowToJsonConverters.RowToJsonConverter runtimeConverter;
+    @Getter private final RowToJsonConverters.RowToJsonConverter runtimeConverter;
 
     public JsonSerializationSchema(SeaTunnelRowType rowType) {
         this.rowType = rowType;
