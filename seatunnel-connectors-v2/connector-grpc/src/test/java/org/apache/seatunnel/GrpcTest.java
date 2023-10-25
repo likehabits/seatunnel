@@ -1,25 +1,24 @@
- package org.apache.seatunnel;
+package org.apache.seatunnel;
 
- import com.google.protobuf.Empty;
- import com.seatunnel.grpc.MetaDataSetDataStream;
- import com.seatunnel.grpc.MetaStreamServiceGrpc;
- import io.grpc.Server;
- import io.grpc.ServerBuilder;
- import io.grpc.stub.StreamObserver;
+import com.google.protobuf.Empty;
+import com.seatunnel.grpc.MetaDataSetDataStream;
+import com.seatunnel.grpc.MetaStreamServiceGrpc;
+import io.grpc.Server;
+import io.grpc.ServerBuilder;
+import io.grpc.stub.StreamObserver;
 
- public class GrpcTest extends MetaStreamServiceGrpc.MetaStreamServiceImplBase {
+public class GrpcTest extends MetaStreamServiceGrpc.MetaStreamServiceImplBase {
 
     public static void main(String[] args) throws Exception {
         Server server = ServerBuilder.forPort(50051).addService(new GrpcTest()).build();
-        System.out.println("启动了");
         server.start();
         server.awaitTermination();
-
     }
 
     @Override
     public StreamObserver<MetaDataSetDataStream> dataSetDataStream(
             StreamObserver<Empty> responseObserver) {
+        System.out.println("连接");
         return new StreamObserver<MetaDataSetDataStream>() {
             String dataSetId = null;
 
@@ -40,4 +39,4 @@
             }
         };
     }
- }
+}

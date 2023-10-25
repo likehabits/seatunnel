@@ -1,20 +1,3 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.apache.seatunnel.connectors.seatunnel.grpc.sink.sink;
 
 import org.apache.seatunnel.api.serialization.SerializationSchema;
@@ -59,6 +42,7 @@ public class GrpcClient {
     private final SerializationSchema serializationSchema;
     private volatile boolean isRunning = Boolean.TRUE;
     private static final int CONNECTION_RETRY_DELAY = 500;
+    private boolean activeClose = false;
 
     public GrpcClient(GrpcSinkConfig config, SerializationSchema serializationSchema) {
         this.hostName = config.getHost();
@@ -77,12 +61,19 @@ public class GrpcClient {
                 port,
                 traceId,
                 dataSetId);
-        client =
-                ManagedChannelBuilder.forAddress(hostName, port)
-                        .maxInboundMessageSize(Integer.MAX_VALUE)
-                        .maxInboundMetadataSize(Integer.MAX_VALUE)
-                        .usePlaintext()
-                        .build();
+        try {
+            client =
+                    ManagedChannelBuilder.forAddress(hostName, port)
+                            .maxInboundMessageSize(Integer.MAX_VALUE)
+                            .maxInboundMetadataSize(Integer.MAX_VALUE)
+                            .usePlaintext()
+                            .build();
+        } catch (Exception e) {
+            log.error("错误信息:{}", e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
+
         metaDataSetDataStreamStreamObserver =
                 MetaStreamServiceGrpc.newStub(client)
                         .dataSetDataStream(
@@ -94,7 +85,13 @@ public class GrpcClient {
                                     public void onError(Throwable throwable) {}
 
                                     @Override
-                                    public void onCompleted() {}
+                                    public void onCompleted() {
+                                        log.error(
+                                                "active close dataSetId:{} - traceId:{}",
+                                                dataSetId,
+                                                traceId);
+                                        activeClose = true;
+                                    }
                                 });
     }
 
@@ -104,7 +101,6 @@ public class GrpcClient {
                 createConnection();
             }
         } catch (Exception e) {
-            e.printStackTrace();
             throw new GrpcConnectorException(
                     GrpcConnectorErrorCode.SOCKET_SERVER_CONNECT_FAILED,
                     String.format("Cannot connect to grpc server at %s:%d", hostName, port),
@@ -113,6 +109,9 @@ public class GrpcClient {
     }
 
     public void write(SeaTunnelRow row) throws IOException {
+        if (activeClose) {
+            return;
+        }
         JsonSerializationSchema s = ((JsonSerializationSchema) serializationSchema);
         try {
             if (s.getNode() == null) {
@@ -140,7 +139,7 @@ public class GrpcClient {
                         .putAllData(dataProjectMap)
                         .build();
         try {
-            log.error("grpc - noNext:{}", dataBuild.toString());
+            log.error("grpc - noNext:{}", dataBuild);
             metaDataSetDataStreamStreamObserver.onNext(dataBuild);
         } catch (Exception e) {
             // if no re-tries are enable, fail immediately
@@ -240,19 +239,22 @@ public class GrpcClient {
         } else if (o instanceof String) {
             return Project.newBuilder()
                     .setVarType(VarType.STRING)
-                    .setValueString(ByteString.copyFrom(String.valueOf(o), "utf-8"))
+                    .setValueString(ByteString.copyFrom(o.toString(), "utf-8"))
                     .build();
         } else if (o instanceof Integer) {
-            return Project.newBuilder().setVarType(VarType.INT32).setValueInt32((int) o).build();
+            return Project.newBuilder()
+                    .setVarType(VarType.INT32)
+                    .setValueInt32((Integer) o)
+                    .build();
         } else if (o instanceof Float) {
-            return Project.newBuilder().setVarType(VarType.FLOAT).setValueFloat((float) o).build();
+            return Project.newBuilder().setVarType(VarType.FLOAT).setValueFloat((Float) o).build();
         } else if (o instanceof Double) {
             return Project.newBuilder()
                     .setVarType(VarType.DOUBLE)
-                    .setValueDouble((double) o)
+                    .setValueDouble((Double) o)
                     .build();
         } else if (o instanceof Boolean) {
-            return Project.newBuilder().setVarType(VarType.BOOL).setValueBool((boolean) o).build();
+            return Project.newBuilder().setVarType(VarType.BOOL).setValueBool((Boolean) o).build();
         } else if (o instanceof byte[]) {
             return Project.newBuilder()
                     .setVarType(VarType.BYTE)
@@ -264,6 +266,9 @@ public class GrpcClient {
                     .setValueInt64(((Date) o).getTime())
                     .build();
         }
-        return Project.newBuilder().build();
+        return Project.newBuilder()
+                .setVarType(VarType.STRING)
+                .setValueString(ByteString.copyFrom("", "utf-8"))
+                .build();
     }
 }

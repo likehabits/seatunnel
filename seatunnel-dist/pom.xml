@@ -105,6 +105,7 @@
                 <hadoop-aws.version>3.1.4</hadoop-aws.version>
                 <aws-java-sdk.version>1.11.271</aws-java-sdk.version>
                 <netty-buffer.version>4.1.89.Final</netty-buffer.version>
+                <grpc.version>1.57.2</grpc.version>
             </properties>
             <dependencies>
                 <!-- starters -->
@@ -520,6 +521,12 @@
                     <version>${project.version}</version>
                     <scope>provided</scope>
                 </dependency>
+                <dependency>
+                    <groupId>org.apache.seatunnel</groupId>
+                    <artifactId>connector-grpc</artifactId>
+                    <version>${project.version}</version>
+                    <scope>provided</scope>
+                </dependency>
 
                 <!-- jdbc driver -->
                 <dependency>
@@ -635,6 +642,24 @@
                     <scope>provided</scope>
                 </dependency>
                 <!-- hadoop jar end -->
+                <dependency>
+                    <groupId>io.grpc</groupId>
+                    <artifactId>grpc-netty-shaded</artifactId>
+                    <version>${grpc.version}</version>
+                    <scope>runtime</scope>
+                </dependency>
+                <dependency>
+                    <groupId>io.grpc</groupId>
+                    <artifactId>grpc-protobuf</artifactId>
+                    <version>${grpc.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>io.grpc</groupId>
+                    <artifactId>grpc-stub</artifactId>
+                    <version>${grpc.version}</version>
+                    <scope>provided</scope>
+                </dependency>
             </dependencies>
             <repositories>
                 <repository>
