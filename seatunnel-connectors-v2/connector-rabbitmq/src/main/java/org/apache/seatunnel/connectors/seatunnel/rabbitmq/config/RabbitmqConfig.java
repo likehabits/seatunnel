@@ -61,6 +61,7 @@ public class RabbitmqConfig implements Serializable {
     private boolean usesCorrelationId = false;
 
     private final Map<String, Object> sinkOptionProps = new HashMap<>();
+    private final Map<String, Object> headerProps = new HashMap<>();
 
     public static final Option<String> HOST =
             Options.key("host")
@@ -186,6 +187,11 @@ public class RabbitmqConfig implements Serializable {
                     .withDescription(
                             "In addition to the above parameters that must be specified by the RabbitMQ client, the user can also specify multiple non-mandatory parameters for the client, "
                                     + "covering [all the parameters specified in the official RabbitMQ document](https://www.rabbitmq.com/configure.html).");
+    public static final Option<Map<String, String>> RABBITMQ_HEADERS =
+            Options.key("rabbitmq.headers")
+                    .mapType()
+                    .defaultValue(Collections.emptyMap())
+                    .withDescription("headers");
 
     public static final Option<Boolean> USE_CORRELATION_ID =
             Options.key("use_correlation_id")
@@ -203,6 +209,15 @@ public class RabbitmqConfig implements Serializable {
                             (key, value) -> {
                                 final String configKey = key.toLowerCase();
                                 this.sinkOptionProps.put(configKey, value.unwrapped());
+                            });
+        }
+        if (CheckConfigUtil.isValidParam(pluginConfig, RABBITMQ_HEADERS.key())) {
+            pluginConfig
+                    .getObject(RABBITMQ_HEADERS.key())
+                    .forEach(
+                            (key, value) -> {
+                                final String configKey = key.toLowerCase();
+                                this.headerProps.put(configKey, value.unwrapped());
                             });
         }
     }

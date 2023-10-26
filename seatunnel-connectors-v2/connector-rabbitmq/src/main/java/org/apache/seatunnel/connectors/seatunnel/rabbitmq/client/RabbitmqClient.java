@@ -23,11 +23,13 @@ import org.apache.seatunnel.connectors.seatunnel.rabbitmq.exception.RabbitmqConn
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Delivery;
+import com.rabbitmq.client.MessageProperties;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -130,12 +132,25 @@ public class RabbitmqClient {
 
     public void write(byte[] msg) {
         try {
+            AMQP.BasicProperties basicProperties = null;
+            if (!config.getHeaderProps().isEmpty()) {
+                basicProperties =
+                        MessageProperties.PERSISTENT_TEXT_PLAIN
+                                .builder()
+                                .headers(config.getHeaderProps())
+                                .build();
+            }
             if (StringUtils.isEmpty(config.getRoutingKey())) {
-                channel.basicPublish("", config.getQueueName(), null, msg);
+                channel.basicPublish("", config.getQueueName(), basicProperties, msg);
             } else {
                 // not support set returnListener
                 channel.basicPublish(
-                        config.getExchange(), config.getRoutingKey(), false, false, null, msg);
+                        config.getExchange(),
+                        config.getRoutingKey(),
+                        false,
+                        false,
+                        basicProperties,
+                        msg);
             }
         } catch (IOException e) {
             if (config.isLogFailuresOnly()) {
