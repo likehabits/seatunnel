@@ -108,6 +108,8 @@ if [[ $DAEMON == true && $HELP == false ]]; then
   if [[ ! -d ${APP_DIR}/logs ]]; then
     mkdir -p ${APP_DIR}/logs
   fi
+  mkdir -p /data/seatunnel/
+  cp -r ${APP_DIR}/connectors /data/seatunnel/
   touch $OUT
   nohup java ${JAVA_OPTS} -cp ${CLASS_PATH} ${APP_MAIN} ${args} > "$OUT" 200<&- 2>&1 < /dev/null &
   else

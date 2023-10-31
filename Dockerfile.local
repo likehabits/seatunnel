@@ -8,7 +8,5 @@ RUN apt update \
 
 ADD seatunnel-dist/target/apache-seatunnel-*-SNAPSHOT-bin.tar.gz /seatunnel
 RUN mv /seatunnel/apache-seatunnel-2.3.3-SNAPSHOT /seatunnel/apache-seatunnel
-RUN mkdir -p /data/seatunnel/
-RUN cp -r /seatunnel/apache-seatunnel/connectors /data/seatunnel/
 
 ENTRYPOINT ["/bin/sh","/seatunnel/apache-seatunnel/bin/seatunnel-cluster.sh","-d"]
