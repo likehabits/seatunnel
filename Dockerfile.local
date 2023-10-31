@@ -6,8 +6,8 @@ RUN apt update \
   && apt -y install tzdata \
   && ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
-ADD seatunnel-dist/target/apache-seatunnel-*-SNAPSHOT-bin.tar.gz /data
-RUN mv /data/apache-seatunnel-2.3.3-SNAPSHOT /data/seatunnel
+ADD seatunnel-dist/target/apache-seatunnel-*-SNAPSHOT-bin.tar.gz /seatunnel
+RUN mv /seatunnel/apache-seatunnel-2.3.3-SNAPSHOT /seatunnel/apache-seatunnel
+RUN ln -s /seatunnel/apache-seatunnel/connectors /data/
 
-
-ENTRYPOINT ["/bin/sh","/data/seatunnel/bin/seatunnel-cluster.sh","-d"]
+ENTRYPOINT ["/bin/sh","/seatunnel/apache-seatunnel/bin/seatunnel-cluster.sh","-d"]
