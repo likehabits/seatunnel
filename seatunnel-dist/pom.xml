@@ -109,7 +109,7 @@
             </properties>
             <dependencies>
                 <!-- starters -->
-                <dependency>
+                <!--<dependency>
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>seatunnel-flink-13-starter</artifactId>
                     <version>${project.version}</version>
@@ -132,7 +132,7 @@
                     <artifactId>seatunnel-spark-3-starter</artifactId>
                     <version>${project.version}</version>
                     <scope>provided</scope>
-                </dependency>
+                </dependency>-->
                 <dependency>
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>seatunnel-starter</artifactId>
@@ -171,7 +171,7 @@
                     <version>${project.version}</version>
                     <scope>provided</scope>
                 </dependency>-->
-                <dependency>
+                <!--<dependency>
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>connector-http-base</artifactId>
                     <version>${project.version}</version>
@@ -218,7 +218,7 @@
                     <artifactId>connector-http-notion</artifactId>
                     <version>${project.version}</version>
                     <scope>provided</scope>
-                </dependency>
+                </dependency>-->
                 <!--<dependency>
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>connector-http-persistiq</artifactId>
@@ -255,7 +255,7 @@
                     <version>${project.version}</version>
                     <scope>provided</scope>
                 </dependency>-->
-                <dependency>
+                <!--<dependency>
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>connector-file-hadoop</artifactId>
                     <version>${project.version}</version>
@@ -296,7 +296,7 @@
                     <artifactId>connector-file-sftp</artifactId>
                     <version>${project.version}</version>
                     <scope>provided</scope>
-                </dependency>
+                </dependency>-->
                 <!--                <dependency>-->
                 <!--                    <groupId>org.apache.seatunnel</groupId>-->
                 <!--                    <artifactId>connector-hudi</artifactId>-->
@@ -321,12 +321,12 @@
                     <version>${project.version}</version>
                     <scope>provided</scope>
                 </dependency>-->
-                <dependency>
+                <!--<dependency>
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>connector-elasticsearch</artifactId>
                     <version>${project.version}</version>
                     <scope>provided</scope>
-                </dependency>
+                </dependency>-->
                 <!--<dependency>
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>connector-iotdb</artifactId>
@@ -369,12 +369,12 @@
                     <version>${project.version}</version>
                     <scope>provided</scope>
                 </dependency>-->
-                <dependency>
+                <!--<dependency>
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>connector-mongodb</artifactId>
                     <version>${project.version}</version>
                     <scope>provided</scope>
-                </dependency>
+                </dependency>-->
                 <!--<dependency>
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>connector-iceberg</artifactId>
@@ -393,12 +393,12 @@
                     <version>${project.version}</version>
                     <scope>provided</scope>
                 </dependency>-->
-                <dependency>
+                <!--<dependency>
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>connector-file-s3</artifactId>
                     <version>${project.version}</version>
                     <scope>provided</scope>
-                </dependency>
+                </dependency>-->
                 <!--<dependency>
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>connector-amazondynamodb</artifactId>
@@ -423,7 +423,7 @@
                     <version>${project.version}</version>
                     <scope>provided</scope>
                 </dependency>-->
-                <dependency>
+                <!--<dependency>
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>connector-http-gitlab</artifactId>
                     <version>${project.version}</version>
@@ -440,7 +440,7 @@
                     <artifactId>connector-http-jira</artifactId>
                     <version>${project.version}</version>
                     <scope>provided</scope>
-                </dependency>
+                </dependency>-->
                 <dependency>
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>connector-rabbitmq</artifactId>
@@ -465,7 +465,7 @@
                     <version>${project.version}</version>
                     <scope>provided</scope>
                 </dependency>-->
-                <dependency>
+                <!--<dependency>
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>connector-cdc-mysql</artifactId>
                     <version>${project.version}</version>
@@ -482,7 +482,7 @@
                     <artifactId>connector-cdc-sqlserver</artifactId>
                     <version>${project.version}</version>
                     <scope>provided</scope>
-                </dependency>
+                </dependency>-->
                 <!--<dependency>
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>connector-tdengine</artifactId>
@@ -684,7 +684,7 @@
                     <version>${project.version}</version>
                     <scope>provided</scope>
                 </dependency>
-                <dependency>
+                <!--<dependency>
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>seatunnel-flink-13-starter</artifactId>
                     <version>${project.version}</version>
@@ -708,13 +708,13 @@
                     <version>${project.version}</version>
                     <scope>provided</scope>
                 </dependency>
-                <!-- seatunnel connectors for demo -->
+                &lt;!&ndash; seatunnel connectors for demo &ndash;&gt;
                 <dependency>
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>connector-fake</artifactId>
                     <version>${project.version}</version>
                     <scope>provided</scope>
-                </dependency>
+                </dependency>-->
                 <dependency>
                     <groupId>org.apache.seatunnel</groupId>
                     <artifactId>connector-console</artifactId>
