@@ -11,7 +11,7 @@ import org.apache.seatunnel.format.json.JsonSerializationSchema;
 import org.apache.seatunnel.format.json.exception.SeaTunnelJsonFormatException;
 
 import com.google.protobuf.ByteString;
-import com.google.protobuf.Empty;
+import com.seatunnel.grpc.Empty;
 import com.seatunnel.grpc.MetaDataSetDataStream;
 import com.seatunnel.grpc.MetaStreamServiceGrpc;
 import com.seatunnel.grpc.Project;

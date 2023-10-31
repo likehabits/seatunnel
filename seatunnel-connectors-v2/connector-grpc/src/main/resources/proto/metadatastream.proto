@@ -1,14 +1,15 @@
 syntax = "proto3";
 option java_package = "com.seatunnel.grpc";
 option java_multiple_files = true;
-
-import "google/protobuf/empty.proto";
 package seatunnel.rpc;
 
 service MetaStreamService {
-  rpc DataSetDataStream(stream MetaDataSetDataStream) returns (google.protobuf.Empty);
+  rpc DataSetDataStream(stream MetaDataSetDataStream) returns (Empty);
 }
 
+message Empty{
+
+}
 
 
 message MetaDataSetDataStream{
