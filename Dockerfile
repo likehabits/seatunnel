@@ -13,12 +13,11 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update \
   && apt -y install tzdata \
-  && apt -y install tar \
   && ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
-COPY --from=build /opt/seatunnel-dist/target/apache-seatunnel-*-SNAPSHOT-bin.tar.gz /seatunnel/apache-seatunnel-bin.tar.gz
-
-RUN tar -zxvf /seatunnel/apache-seatunnel-bin.tar.gz -C /seatunnel/apache-seatunnel
-
+ADD seatunnel-dist/target/apache-seatunnel-*-SNAPSHOT-bin.tar.gz /seatunnel
+RUN mv /seatunnel/apache-seatunnel-2.3.3-SNAPSHOT /seatunnel/apache-seatunnel
+RUN mkdir -p /data/seatunnel/
+RUN cp -r /seatunnel/apache-seatunnel/connectors /data/seatunnel/
 
 ENTRYPOINT ["/bin/sh","/seatunnel/apache-seatunnel/bin/seatunnel-cluster.sh","-d"]
