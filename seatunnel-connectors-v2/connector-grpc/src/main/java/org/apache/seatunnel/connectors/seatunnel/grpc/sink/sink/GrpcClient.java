@@ -268,7 +268,7 @@ public class GrpcClient {
         }
         return Project.newBuilder()
                 .setVarType(VarType.STRING)
-                .setValueString(ByteString.copyFrom("", "utf-8"))
+                .setValueString(ByteString.copyFrom(o.toString(), "utf-8"))
                 .build();
     }
 }
