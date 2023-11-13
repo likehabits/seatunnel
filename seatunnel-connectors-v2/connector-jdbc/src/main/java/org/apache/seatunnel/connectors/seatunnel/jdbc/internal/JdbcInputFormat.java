@@ -99,7 +99,7 @@ public class JdbcInputFormat implements Serializable {
         } catch (SQLException se) {
             throw new JdbcConnectorException(
                     JdbcConnectorErrorCode.CONNECT_DATABASE_FAILED,
-                    "open() failed." + se.getMessage(),
+                    "open() sql:"+queryTemplate+" failed." + se.getMessage(),
                     se);
         } catch (ClassNotFoundException cnfe) {
             throw new JdbcConnectorException(
