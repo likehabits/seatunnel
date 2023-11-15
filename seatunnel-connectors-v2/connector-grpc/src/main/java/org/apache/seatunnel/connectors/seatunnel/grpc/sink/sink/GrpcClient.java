@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -253,7 +254,13 @@ public class GrpcClient {
                     .build();
         } else if (o instanceof Float) {
             return Project.newBuilder().setVarType(VarType.FLOAT).setValueFloat((Float) o).build();
-        } else if (o instanceof Double) {
+        } else if(o instanceof BigDecimal){
+            return Project.newBuilder()
+                    .setVarType(VarType.DOUBLE)
+                    .setValueDouble(((BigDecimal) o).doubleValue())
+                    .build();
+        }
+        else if (o instanceof Double) {
             return Project.newBuilder()
                     .setVarType(VarType.DOUBLE)
                     .setValueDouble((Double) o)
