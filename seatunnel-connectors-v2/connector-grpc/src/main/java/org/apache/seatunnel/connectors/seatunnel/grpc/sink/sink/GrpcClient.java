@@ -235,12 +235,12 @@ public class GrpcClient {
     }
 
     private Project getProjectBuilder(Object o) throws UnsupportedEncodingException {
-        if (o == null){
+        if (o == null) {
             Project.newBuilder()
                     .setVarType(VarType.STRING)
                     .setValueString(ByteString.copyFrom("", "utf-8"))
                     .build();
-        }else if (o instanceof Long) {
+        } else if (o instanceof Long) {
             return Project.newBuilder().setVarType(VarType.INT64).setValueInt64((long) o).build();
         } else if (o instanceof String) {
             return Project.newBuilder()
@@ -254,13 +254,12 @@ public class GrpcClient {
                     .build();
         } else if (o instanceof Float) {
             return Project.newBuilder().setVarType(VarType.FLOAT).setValueFloat((Float) o).build();
-        } else if(o instanceof BigDecimal){
+        } else if (o instanceof BigDecimal) {
             return Project.newBuilder()
                     .setVarType(VarType.DOUBLE)
                     .setValueDouble(((BigDecimal) o).doubleValue())
                     .build();
-        }
-        else if (o instanceof Double) {
+        } else if (o instanceof Double) {
             return Project.newBuilder()
                     .setVarType(VarType.DOUBLE)
                     .setValueDouble((Double) o)
