@@ -91,11 +91,11 @@ public class HiveTypeMapper implements JdbcDialectTypeMapper {
     @Override
     public SeaTunnelDataType<?> mapping(ResultSetMetaData metadata, int colIndex)
             throws SQLException {
-        String mysqlType = metadata.getColumnTypeName(colIndex).toUpperCase();
-        String columnName = metadata.getColumnName(colIndex);
+        String hiveType = metadata.getColumnTypeName(colIndex).toUpperCase();
+        //        String columnName = metadata.getColumnName(colIndex);
         int precision = metadata.getPrecision(colIndex);
         int scale = metadata.getScale(colIndex);
-        switch (mysqlType) {
+        switch (hiveType) {
             case HIVE_BIT:
                 if (precision == 1) {
                     return BasicType.BOOLEAN_TYPE;
@@ -176,7 +176,7 @@ public class HiveTypeMapper implements JdbcDialectTypeMapper {
                         CommonErrorCode.UNSUPPORTED_OPERATION,
                         String.format(
                                 "Doesn't support Hive type '%s' on column '%s'  yet.",
-                                mysqlType, jdbcColumnName));
+                                hiveType, jdbcColumnName));
         }
     }
 }

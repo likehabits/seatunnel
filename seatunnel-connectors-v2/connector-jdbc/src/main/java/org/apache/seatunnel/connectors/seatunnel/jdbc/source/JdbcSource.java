@@ -172,9 +172,22 @@ public class JdbcSource
         try {
             ResultSetMetaData resultSetMetaData =
                     jdbcDialect.getResultSetMetaData(conn, jdbcSourceConfig);
+            boolean isHive =
+                    jdbcSourceConfig.getJdbcConnectionConfig().getDriverName().contains("hive");
             for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
                 // Support AS syntax
-                fieldNames.add(resultSetMetaData.getColumnLabel(i));
+                if (isHive) {
+                    String columnLabel = resultSetMetaData.getColumnLabel(i);
+                    String[] columnLabelSplit = columnLabel.split("\\.");
+                    LOG.info(
+                            "DriverName : hive columnLabel:{} - columnLabelSplitLength:{}",
+                            columnLabel,
+                            columnLabelSplit.length);
+                    fieldNames.add(
+                            columnLabelSplit.length == 2 ? columnLabelSplit[1] : columnLabel);
+                } else {
+                    fieldNames.add(resultSetMetaData.getColumnLabel(i));
+                }
                 seaTunnelDataTypes.add(jdbcDialectTypeMapper.mapping(resultSetMetaData, i));
             }
         } catch (Exception e) {
