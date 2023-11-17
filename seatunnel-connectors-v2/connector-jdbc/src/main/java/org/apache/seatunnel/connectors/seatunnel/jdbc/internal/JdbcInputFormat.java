@@ -217,7 +217,7 @@ public class JdbcInputFormat implements Serializable {
             if (!hasNext) {
                 return null;
             }
-            LOG.info("typeInfo:{}", typeInfo.toString());
+            //            LOG.info("typeInfo:{}", typeInfo.toString());
             SeaTunnelRow seaTunnelRow = jdbcRowConverter.toInternal(resultSet, typeInfo);
             // update hasNext after we've read the record
             hasNext = resultSet.next();
