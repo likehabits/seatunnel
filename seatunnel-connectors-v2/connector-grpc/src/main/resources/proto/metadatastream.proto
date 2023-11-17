@@ -27,6 +27,7 @@ enum VarType {
   BOOL = 5;
   BYTE = 6;
   TIMESTAMP = 7;
+  NULL = 8;
 }
 
 message Project {

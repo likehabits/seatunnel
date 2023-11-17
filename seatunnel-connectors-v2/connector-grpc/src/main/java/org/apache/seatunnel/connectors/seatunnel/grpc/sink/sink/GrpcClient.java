@@ -236,10 +236,7 @@ public class GrpcClient {
 
     private Project getProjectBuilder(Object o) throws UnsupportedEncodingException {
         if (o == null) {
-            Project.newBuilder()
-                    .setVarType(VarType.STRING)
-                    .setValueString(ByteString.copyFrom("", "utf-8"))
-                    .build();
+            return Project.newBuilder().setVarType(VarType.NULL).build();
         } else if (o instanceof Long) {
             return Project.newBuilder().setVarType(VarType.INT64).setValueInt64((long) o).build();
         } else if (o instanceof String) {

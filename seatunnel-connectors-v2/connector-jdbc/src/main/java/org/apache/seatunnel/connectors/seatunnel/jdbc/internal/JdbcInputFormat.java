@@ -94,7 +94,7 @@ public class JdbcInputFormat implements Serializable {
             if (autoCommit != null) {
                 dbConn.setAutoCommit(autoCommit);
             }
-
+            LOG.info("queryTemplate:{} - fetchSize:{}", queryTemplate, fetchSize);
             statement = jdbcDialect.creatPreparedStatement(dbConn, queryTemplate, fetchSize);
         } catch (SQLException se) {
             throw new JdbcConnectorException(
